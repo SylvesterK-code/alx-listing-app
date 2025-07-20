@@ -65,3 +65,32 @@ git clone https://github.com/your-username/alx-listing-app.git
 cd alx-listing-app
 npm install
 npm run dev
+
+
+
+
+
+
+
+
+
+responsive listing page
+
+mkdir -p components/layout
+ni components/layout/Header.tsx 
+ni components/layout/Footer.tsx 
+ni components/layout/Layout.tsx
+
+................................................
+mkdir -p components/layout
+ni components/layout/Header.tsx 
+ni components/layout/Footer.tsx 
+ni components/layout/Layout.tsx
+
+
+mkdir constants 
+mkdir interfaces
+ni constants/index.ts 
+ni interfaces/index.ts
+
+

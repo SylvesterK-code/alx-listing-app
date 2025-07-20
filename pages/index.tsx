@@ -148,40 +148,56 @@ export default function Home() {
 }
 
 */
+import { useState } from "react";
+import Pill from "@/components/Pill";
+import PropertyCard from "@/components/PropertyCard";
+import { PROPERTYLISTINGSAMPLE } from "@/constants";
 
+// ✅ Hero Section as a separate component
+const Hero = () => (
+  <section className="bg-cover bg-center text-white p-20"
+    style={{ backgroundImage: `url('/your-hero-bg.jpg')` }}>
+    <h1 className="text-4xl font-bold mb-4">Find your favorite place here!</h1>
+    <p className="text-lg">The best prices for over 2 million properties worldwide.</p>
+  </section>
+);
 
-import Card from '../components/common/Card';
-import Button from '../components/common/Button';
+// ✅ Main Home Component
+const Home = () => {
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
 
-export default function Home() {
+  const filters = ["All", "Top Villa", "Self Checkin", "Free WiFi", "Beachfront", "Mountain View"];
+
+  const filteredProperties = selectedFilter === "All"
+    ? PROPERTYLISTINGSAMPLE
+    : PROPERTYLISTINGSAMPLE.filter(property =>
+        property.category.includes(selectedFilter)
+      );
+
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
-      {/* Logo */}
-      <div className="flex justify-center mb-6">
-        <img src="/assets/logo.jpg" alt="ALX Logo" className="h-16" />
-      </div>
+    <>
+      <Hero />
 
-      <h1 className="text-3xl font-bold mb-6 text-center">Welcome to the ALX Listing App</h1>
+      {/* Filter Pills */}
+      <section className="flex flex-wrap gap-2 px-6 py-4">
+        {filters.map((filter) => (
+          <Pill
+            key={filter}
+            label={filter}
+            onClick={() => setSelectedFilter(filter)}
+            active={filter === selectedFilter}
+          />
+        ))}
+      </section>
 
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <Card
-          title="Cozy Apartment"
-          image="/assets/house1.jpg"
-          description="A beautiful and modern apartment in the city center."
-        />
-
-        <Card
-          title="Beach House"
-          image="/assets/house2.jpg"
-          description="Relax in a beachfront property with stunning views."
-        />
-      </div>
-
-      {/* Button */}
-      <div className="mt-8 flex justify-center">
-        <Button label="Explore More" onClick={() => alert('Coming soon!')} />
-      </div>
-    </main>
+      {/* Property Listing */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        {filteredProperties.map((property) => (
+          <PropertyCard key={property.name} {...property} />
+        ))}
+      </section>
+    </>
   );
-}
+};
+
+export default Home;
